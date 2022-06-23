@@ -1,0 +1,99 @@
+apiVersion: spinnaker.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  spinnakerConfig:
+    config:
+      version: $SPINNAKER_VERSION   # the version of Spinnaker to be deployed
+      persistentStorage:
+        persistentStoreType: s3
+        s3:
+          bucket: $S3_BUCKET # Change to a unique name. Spinnaker stores application and pipeline definitions here
+          rootFolder: front50
+          region: $AWS_REGION
+          accessKeyId: $AWS_ACCESS_KEY_ID
+          secretAccessKey: $AWS_SECRET_ACCESS_KEY
+      deploymentEnvironment:
+        sidecars:
+          spin-clouddriver:
+          - name: token-refresh
+            dockerImage: quay.io/skuid/ecr-token-refresh:latest
+            mountPath: /etc/passwords
+            configMapVolumeMounts:
+            - configMapName: token-refresh-config
+              mountPath: /opt/config/ecr-token-refresh
+      features:
+        artifacts: true
+      artifacts:
+        github:
+          enabled: true
+          accounts:
+          - name: $GITHUB_USER
+            token: $GITHUB_TOKEN  # GitHub's personal access token. This fields supports `encrypted` references to secrets.
+      providers:
+          dockerRegistry:
+            enabled: true
+          kubernetes:
+            enabled: true
+            accounts:
+            - name: spinnaker-workshop
+              requiredGroupMembership: []
+              providerVersion: V2
+              permissions:
+              dockerRegistries:
+                - accountName: my-ecr-registry
+              configureImagePullSecrets: true
+              cacheThreads: 1
+              namespaces: [spinnaker,detail]
+              omitNamespaces: []
+              kinds: []
+		      omitKinds: []
+              customResources: []
+              cachingPolicies: []
+              oAuthScopes: []
+              onlySpinnakerManaged: false
+              kubeconfigFile: kubeconfig-sp  # File name must match "files" key
+            primaryAccount: spinnaker-workshop  # Change to a desired account from the accounts array
+    profiles:
+        clouddriver:
+          dockerRegistry:
+            enabled: true
+            primaryAccount: my-ecr-registry
+            accounts:
+            - name: my-ecr-registry
+              address: https://$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+              username: AWS
+              passwordFile: /etc/passwords/my-ecr-registry.pass
+              trackDigests: true
+              repositories:
+              - $ECR_REPOSITORY
+        igor:
+          docker-registry:
+            enabled: true
+    files:
+        kubeconfig-sp: |
+            apiVersion: v1
+            clusters:
+            - cluster:
+                certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM1ekNDQWMrZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJeU1EWXlNVEU0TkRBME1sb1hEVE15TURZeE9ERTROREEwTWxvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBT3I5CkVrb1ByOG9Ob0FqM1ptckkrZ2pKOTY3bkl1QUJqcDVxWUQwYmUvMnpZcmhBQ2N6TitKczFiZHZDd29wRkNNNnYKNWpxTFc0alZta3JONWt6T3NkamRoRW1zN3M0eXY4aWM2bjRBeEhzd1p3cjZPa2F2VEsrUXZlTGVtRGFDYWViSApJaWZVWGd1VmxueEpSdC9Nb2tBR2RoSGVMZEptTkkzUTl1ZXRoOHJtNlJUSW5iaWRQUjNabmxQbnpFbHpEV3VUClhlYTMrOXE4OTkyVkhLUlNOcnAySFFRNEZVN0hESVFHd2NBci91a1NneU9QNDhQNzd1cjhIaUVJWHhFRHpXbWYKUUhsS0hST29KUUc5RG53ZG4vaU1XWGRLZkpSMExaWjdGRkp2YmIrMDFzdHNqTXE4Z2hKWHFYVTh6R3JRTkgySgo5MHVHMGhldzFwekRTeWR1S0ZNQ0F3RUFBYU5DTUVBd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZMajBBejJDUDlJTjhIZGxFNVo0dHZGV3gvNUtNQTBHQ1NxR1NJYjMKRFFFQkN3VUFBNElCQVFBczByM24wRS9NWVFNYVo2eFFrMmlSdWpYWmdEb3JjelJLTHU1MjRyc3dBZGlLdjRpKwoyakZQYWxFYStEbmlib2p5cUl0MkpTcU02bTgrd29ZaEVVQ0dFakRmYTY3ZVFzbi8vREFWYkhQOVBGWlIxK3dPCm04RUJOaHkxSUVTdlZIcUpyTThTUUEvYnNhUWFBRmF6RWtzR0JzMURibzljUjd1cCsxR2V3cmVGYVk2Z3BZOS8KeHFOeXVYUHpOM2ZoOE80b2hwZWxpOXhIRFY4ekpSVE5jVU5QTHVBNWw3dWJhSDRLb0lHU0UxaFhidE1yNDJ6TQpVSUlFWWhhajU3RDYzUU8rQm9tcldZaFFxYXZ2dVR4NFJpcGJTd2V4bzE1bTMzendjQU5YbnlOTVJSeTNpL2kwCjZaWHF3RnJtODRIY2o1ZGZIRU1JYXVyZnhCdXludDdFTWRvUAotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+                server: https://AE25094B84A0ADAF3BD93BD2382AE46C.yl4.us-east-1.eks.amazonaws.com
+              name: arn:aws:eks:us-east-1:305410715763:cluster/eks-test
+            contexts:
+            - context:
+                cluster: arn:aws:eks:us-east-1:305410715763:cluster/eks-test
+                namespace: spinnaker
+                user: spinnaker-token-user
+              name: spinnaker
+            current-context: spinnaker
+            kind: Config
+            preferences: {}
+            users:
+            - name: spinnaker-token-user
+              user:
+                token: eyJhbGciOiJSUzI1NiIsImtpZCI6ImJCb3JUR0w4bjVjSm5objV0ZE01SlJiTWh6WTFheEF6b3FhNVR4aEdKeVEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJzcGlubmFrZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoic3Bpbm5ha2VyLXdzLXNhLXRva2VuLWg0dGdmIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InNwaW5uYWtlci13cy1zYSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjAxYmUzNDNjLTk0OTQtNDU5MC1hY2NlLWJmZDczMjU1ZjJhNiIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpzcGlubmFrZXI6c3Bpbm5ha2VyLXdzLXNhIn0.ja1XYJwDAcT2ECHR7bAKafs9u5rOfEbb4FZJjTPPZtu-ngU7rp9jbYGP7UD2iJs8FFG4wUi3hf1dDpxAeREx4G9rg3rSQ9bOTIpU0KbKjSWZO0NEIa2DEEDOeLOMDoWt33fw5DstyFc5zn3gnr33CguD7MHUAUpV53elfIgaNxmrsrAgp3ohfiCccXBrJBtbaYYrHYkJJoNbfSSr_rJdUZZgypJWWFRzjRhLD-fUQiwAEFHKdFmMbdogC3G4V9C6BMJbcLi_y7GQV4tQlQ1sYXT6-qMgSUcUcaQOK79-S_lc1MOwFKqur-AK_aaqmjuP42OIC_AanqPgJQ3kaXO-PA
+  # spec.expose - This section defines how Spinnaker should be publicly exposed
+  expose:
+    type: service  # Kubernetes LoadBalancer type (service/ingress), note: only "service" is supported for now
+    service:
+      type: LoadBalancer
