@@ -32,29 +32,29 @@ spec:
           - name: $GITHUB_USER
             token: $GITHUB_TOKEN  # GitHub's personal access token. This fields supports `encrypted` references to secrets.
       providers:
-          dockerRegistry:
-            enabled: true
-          kubernetes:
-            enabled: true
-            accounts:
-            - name: spinnaker-workshop
-              requiredGroupMembership: []
-              providerVersion: V2
-              permissions:
-              dockerRegistries:
-                - accountName: my-ecr-registry
-              configureImagePullSecrets: true
-              cacheThreads: 1
-              namespaces: [spinnaker,detail]
-              omitNamespaces: []
-              kinds: []
-		      omitKinds: []
-              customResources: []
-              cachingPolicies: []
-              oAuthScopes: []
-              onlySpinnakerManaged: false
-              kubeconfigFile: kubeconfig-sp  # File name must match "files" key
-            primaryAccount: spinnaker-workshop  # Change to a desired account from the accounts array
+        dockerRegistry:
+          enabled: true
+        kubernetes:
+          enabled: true
+          accounts:
+          - name: spinnaker-workshop
+            requiredGroupMembership: []
+            providerVersion: V2
+            permissions:
+            dockerRegistries:
+              - accountName: my-ecr-registry
+            configureImagePullSecrets: true
+            cacheThreads: 1
+            namespaces: [spinnaker,detail]
+            omitNamespaces: []
+            kinds: []
+		    omitKinds: []
+            customResources: []
+            cachingPolicies: []
+            oAuthScopes: []
+            onlySpinnakerManaged: false
+            kubeconfigFile: kubeconfig-sp  # File name must match "files" key
+          primaryAccount: spinnaker-workshop  # Change to a desired account from the accounts array
     profiles:
         clouddriver:
           dockerRegistry:
@@ -74,55 +74,55 @@ spec:
     files:
         kubeconfig-sp: |
             YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv
-		cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VNMWVr
-		TkRRV01yWjBGM1NVSkJaMGxDUVVSQlRrSm5hM0ZvYTJsSE9YY3dRa0ZSYzBaQlJFRldUVkpOZDBW
-		UldVUldVVkZFUlhkd2NtUlhTbXdLWTIwMWJHUkhWbnBOUWpSWVJGUkplVTFFV1hsTlZFVTBUa1JC
-		TUUxc2IxaEVWRTE1VFVSWmVFOUVSVFJPUkVFd1RXeHZkMFpVUlZSTlFrVkhRVEZWUlFwQmVFMUxZ
-		VE5XYVZwWVNuVmFXRkpzWTNwRFEwRlRTWGRFVVZsS1MyOWFTV2gyWTA1QlVVVkNRbEZCUkdkblJW
-		QkJSRU5EUVZGdlEyZG5SVUpCVDNJNUNrVnJiMUJ5T0c5T2IwRnFNMXB0Y2trcloycEtPVFkzYmts
-		MVFVSnFjRFZ4V1VRd1ltVXZNbnBaY21oQlEyTjZUaXRLY3pGaVpIWkRkMjl3UmtOTk5uWUtOV3B4
-		VEZjMGFsWnRhM0pPTld0NlQzTmthbVJvUlcxek4zTTBlWFk0YVdNMmJqUkJlRWh6ZDFwM2NqWlBh
-		MkYyVkVzclVYWmxUR1Z0UkdGRFlXVmlTQXBKYVdaVldHZDFWbXh1ZUVwU2RDOU5iMnRCUjJSb1NH
-		Vk1aRXB0VGtrelVUbDFaWFJvT0hKdE5sSlVTVzVpYVdSUVVqTmFibXhRYm5wRmJIcEVWM1ZVQ2xo
-		bFlUTXJPWEU0T1RreVZraExVbE5PY25BeVNGRlJORVpWTjBoRVNWRkhkMk5CY2k5MWExTm5lVTlR
-		TkRoUU56ZDFjamhJYVVWSldIaEZSSHBYYldZS1VVaHNTMGhTVDI5S1VVYzVSRzUzWkc0dmFVMVhX
-		R1JMWmtwU01FeGFXamRHUmtwMlltSXJNREZ6ZEhOcVRYRTRaMmhLV0hGWVZUaDZSM0pSVGtneVNn
-		bzVNSFZITUdobGR6Rndla1JUZVdSMVMwWk5RMEYzUlVGQllVNURUVVZCZDBSbldVUldVakJRUVZG
-		SUwwSkJVVVJCWjB0clRVRTRSMEV4VldSRmQwVkNDaTkzVVVaTlFVMUNRV1k0ZDBoUldVUldVakJQ
-		UWtKWlJVWk1hakJCZWpKRFVEbEpUamhJWkd4Rk5WbzBkSFpHVjNndk5VdE5RVEJIUTFOeFIxTkpZ
-		ak1LUkZGRlFrTjNWVUZCTkVsQ1FWRkJjekJ5TTI0d1JTOU5XVkZOWVZvMmVGRnJNbWxTZFdwWVdt
-		ZEViM0pqZWxKTFRIVTFNalJ5YzNkQlpHbExkalJwS3dveWFrWlFZV3hGWVN0RWJtbGliMnA1Y1Vs
-		ME1rcFRjVTAyYlRncmQyOVphRVZWUTBkRmFrUm1ZVFkzWlZGemJpOHZSRUZXWWtoUU9WQkdXbEl4
-		SzNkUENtMDRSVUpPYUhreFNVVlRkbFpJY1VweVRUaFRVVUV2WW5OaFVXRkJSbUY2Uld0elIwSnpN
-		VVJpYnpsalVqZDFjQ3N4UjJWM2NtVkdZVmsyWjNCWk9TOEtlSEZPZVhWWVVIcE9NMlpvT0U4MGIy
-		aHdaV3hwT1hoSVJGWTRla3BTVkU1alZVNVFUSFZCTld3M2RXSmhTRFJMYjBsSFUwVXhhRmhpZEUx
-		eU5ESjZUUXBWU1VsRldXaGhhalUzUkRZelVVOHJRbTl0Y2xkWmFGRnhZWFoyZFZSNE5GSnBjR0pU
-		ZDJWNGJ6RTFiVE16ZW5kalFVNVlibmxPVFZKU2VUTnBMMmt3Q2paYVdIRjNSbkp0T0RSSVkybzFa
-		R1pJUlUxSllYVnlabmhDZFhsdWREZEZUV1J2VUFvdExTMHRMVVZPUkNCRFJWSlVTVVpKUTBGVVJT
-		MHRMUzB0Q2c9PQogICAgc2VydmVyOiBodHRwczovL0FFMjUwOTRCODRBMEFEQUYzQkQ5M0JEMjM4
-		MkFFNDZDLnlsNC51cy1lYXN0LTEuZWtzLmFtYXpvbmF3cy5jb20KICBuYW1lOiBhcm46YXdzOmVr
-		czp1cy1lYXN0LTE6MzA1NDEwNzE1NzYzOmNsdXN0ZXIvZWtzLXRlc3QKY29udGV4dHM6Ci0gY29u
-		dGV4dDoKICAgIGNsdXN0ZXI6IGFybjphd3M6ZWtzOnVzLWVhc3QtMTozMDU0MTA3MTU3NjM6Y2x1
-		c3Rlci9la3MtdGVzdAogICAgbmFtZXNwYWNlOiBzcGlubmFrZXIKICAgIHVzZXI6IHNwaW5uYWtl
-		ci10b2tlbi11c2VyCiAgbmFtZTogc3Bpbm5ha2VyCmN1cnJlbnQtY29udGV4dDogc3Bpbm5ha2Vy
-		CmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KdXNlcnM6Ci0gbmFtZTogc3Bpbm5ha2VyLXRv
-		a2VuLXVzZXIKICB1c2VyOgogICAgdG9rZW46IGV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJ
-		bUpDYjNKVVIwdzRialZqU201b2JqVjBaRTAxU2xKaVRXaDZXVEZoZUVGNmIzRmhOVlI0YUVkS2VW
-		RWlmUS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1Zp
-		WlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKemNHbHVi
-		bUZyWlhJaUxDSnJkV0psY201bGRHVnpMbWx2TDNObGNuWnBZMlZoWTJOdmRXNTBMM05sWTNKbGRD
-		NXVZVzFsSWpvaWMzQnBibTVoYTJWeUxYZHpMWE5oTFhSdmEyVnVMV2cwZEdkbUlpd2lhM1ZpWlhK
-		dVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl6WlhKMmFXTmxMV0ZqWTI5MWJuUXVibUZ0
-		WlNJNkluTndhVzV1WVd0bGNpMTNjeTF6WVNJc0ltdDFZbVZ5Ym1WMFpYTXVhVzh2YzJWeWRtbGpa
-		V0ZqWTI5MWJuUXZjMlZ5ZG1salpTMWhZMk52ZFc1MExuVnBaQ0k2SWpBeFltVXpORE5qTFRrME9U
-		UXRORFU1TUMxaFkyTmxMV0ptWkRjek1qVTFaakpoTmlJc0luTjFZaUk2SW5ONWMzUmxiVHB6WlhK
-		MmFXTmxZV05qYjNWdWREcHpjR2x1Ym1GclpYSTZjM0JwYm01aGEyVnlMWGR6TFhOaEluMC5qYTFY
-		WUp3REFjVDJFQ0hSN2JBS2Fmczl1NXJPZkViYjRGWkpqVFBQWnR1LW5nVTdycDlqYllHUDdVRDJp
-		SnM4RkZHNHdVaTNoZjFkRHB4QWVSRXg0RzlyZzNyU1E5Yk9USXBVMEtiS2pTV1pPME5FSWEyREVF
-		RE9lTE9NRG9XdDMzZnc1RHN0eUZjNXpuM2ducjMzQ2d1RDdNSFVBVXBWNTNlbGZJZ2FOeG1yc3JB
-		Z3Azb2hmaUNjY1hCckpCdGJhWVlySFlrSkpvTmJmU1NyX3JKZFVaWmd5cEpXV0ZSempSaExELWZV
-		UWl3QUVGSEtkRm1NYmRvZ0MzRzRWOUM2Qk1KYmNMaV95N0dRVjR0UWxRMXNZWFQ2LXFNZ1NVY1Vj
-		YVFPSzc5LVNfbGMxTU93RktxdXItQUtfYWFxbWp1UDQyT0lDX0FhbnFQZ0pRM2thWE8tUEEK
+            cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VNMWVr
+            TkRRV01yWjBGM1NVSkJaMGxDUVVSQlRrSm5hM0ZvYTJsSE9YY3dRa0ZSYzBaQlJFRldUVkpOZDBW
+            UldVUldVVkZFUlhkd2NtUlhTbXdLWTIwMWJHUkhWbnBOUWpSWVJGUkplVTFFV1hsTlZFVTBUa1JC
+            TUUxc2IxaEVWRTE1VFVSWmVFOUVSVFJPUkVFd1RXeHZkMFpVUlZSTlFrVkhRVEZWUlFwQmVFMUxZ
+            VE5XYVZwWVNuVmFXRkpzWTNwRFEwRlRTWGRFVVZsS1MyOWFTV2gyWTA1QlVVVkNRbEZCUkdkblJW
+            QkJSRU5EUVZGdlEyZG5SVUpCVDNJNUNrVnJiMUJ5T0c5T2IwRnFNMXB0Y2trcloycEtPVFkzYmts
+            MVFVSnFjRFZ4V1VRd1ltVXZNbnBaY21oQlEyTjZUaXRLY3pGaVpIWkRkMjl3UmtOTk5uWUtOV3B4
+            VEZjMGFsWnRhM0pPTld0NlQzTmthbVJvUlcxek4zTTBlWFk0YVdNMmJqUkJlRWh6ZDFwM2NqWlBh
+            MkYyVkVzclVYWmxUR1Z0UkdGRFlXVmlTQXBKYVdaVldHZDFWbXh1ZUVwU2RDOU5iMnRCUjJSb1NH
+            Vk1aRXB0VGtrelVUbDFaWFJvT0hKdE5sSlVTVzVpYVdSUVVqTmFibXhRYm5wRmJIcEVWM1ZVQ2xo
+            bFlUTXJPWEU0T1RreVZraExVbE5PY25BeVNGRlJORVpWTjBoRVNWRkhkMk5CY2k5MWExTm5lVTlR
+            TkRoUU56ZDFjamhJYVVWSldIaEZSSHBYYldZS1VVaHNTMGhTVDI5S1VVYzVSRzUzWkc0dmFVMVhX
+            R1JMWmtwU01FeGFXamRHUmtwMlltSXJNREZ6ZEhOcVRYRTRaMmhLV0hGWVZUaDZSM0pSVGtneVNn
+            bzVNSFZITUdobGR6Rndla1JUZVdSMVMwWk5RMEYzUlVGQllVNURUVVZCZDBSbldVUldVakJRUVZG
+            SUwwSkJVVVJCWjB0clRVRTRSMEV4VldSRmQwVkNDaTkzVVVaTlFVMUNRV1k0ZDBoUldVUldVakJQ
+            UWtKWlJVWk1hakJCZWpKRFVEbEpUamhJWkd4Rk5WbzBkSFpHVjNndk5VdE5RVEJIUTFOeFIxTkpZ
+            ak1LUkZGRlFrTjNWVUZCTkVsQ1FWRkJjekJ5TTI0d1JTOU5XVkZOWVZvMmVGRnJNbWxTZFdwWVdt
+            ZEViM0pqZWxKTFRIVTFNalJ5YzNkQlpHbExkalJwS3dveWFrWlFZV3hGWVN0RWJtbGliMnA1Y1Vs
+            ME1rcFRjVTAyYlRncmQyOVphRVZWUTBkRmFrUm1ZVFkzWlZGemJpOHZSRUZXWWtoUU9WQkdXbEl4
+            SzNkUENtMDRSVUpPYUhreFNVVlRkbFpJY1VweVRUaFRVVUV2WW5OaFVXRkJSbUY2Uld0elIwSnpN
+            VVJpYnpsalVqZDFjQ3N4UjJWM2NtVkdZVmsyWjNCWk9TOEtlSEZPZVhWWVVIcE9NMlpvT0U4MGIy
+            aHdaV3hwT1hoSVJGWTRla3BTVkU1alZVNVFUSFZCTld3M2RXSmhTRFJMYjBsSFUwVXhhRmhpZEUx
+            eU5ESjZUUXBWU1VsRldXaGhhalUzUkRZelVVOHJRbTl0Y2xkWmFGRnhZWFoyZFZSNE5GSnBjR0pU
+            ZDJWNGJ6RTFiVE16ZW5kalFVNVlibmxPVFZKU2VUTnBMMmt3Q2paYVdIRjNSbkp0T0RSSVkybzFa
+            R1pJUlUxSllYVnlabmhDZFhsdWREZEZUV1J2VUFvdExTMHRMVVZPUkNCRFJWSlVTVVpKUTBGVVJT
+            MHRMUzB0Q2c9PQogICAgc2VydmVyOiBodHRwczovL0FFMjUwOTRCODRBMEFEQUYzQkQ5M0JEMjM4
+            MkFFNDZDLnlsNC51cy1lYXN0LTEuZWtzLmFtYXpvbmF3cy5jb20KICBuYW1lOiBhcm46YXdzOmVr
+            czp1cy1lYXN0LTE6MzA1NDEwNzE1NzYzOmNsdXN0ZXIvZWtzLXRlc3QKY29udGV4dHM6Ci0gY29u
+            dGV4dDoKICAgIGNsdXN0ZXI6IGFybjphd3M6ZWtzOnVzLWVhc3QtMTozMDU0MTA3MTU3NjM6Y2x1
+            c3Rlci9la3MtdGVzdAogICAgbmFtZXNwYWNlOiBzcGlubmFrZXIKICAgIHVzZXI6IHNwaW5uYWtl
+            ci10b2tlbi11c2VyCiAgbmFtZTogc3Bpbm5ha2VyCmN1cnJlbnQtY29udGV4dDogc3Bpbm5ha2Vy
+            CmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KdXNlcnM6Ci0gbmFtZTogc3Bpbm5ha2VyLXRv
+            a2VuLXVzZXIKICB1c2VyOgogICAgdG9rZW46IGV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJ
+            bUpDYjNKVVIwdzRialZqU201b2JqVjBaRTAxU2xKaVRXaDZXVEZoZUVGNmIzRmhOVlI0YUVkS2VW
+            RWlmUS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1Zp
+            WlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKemNHbHVi
+            bUZyWlhJaUxDSnJkV0psY201bGRHVnpMbWx2TDNObGNuWnBZMlZoWTJOdmRXNTBMM05sWTNKbGRD
+            NXVZVzFsSWpvaWMzQnBibTVoYTJWeUxYZHpMWE5oTFhSdmEyVnVMV2cwZEdkbUlpd2lhM1ZpWlhK
+            dVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl6WlhKMmFXTmxMV0ZqWTI5MWJuUXVibUZ0
+            WlNJNkluTndhVzV1WVd0bGNpMTNjeTF6WVNJc0ltdDFZbVZ5Ym1WMFpYTXVhVzh2YzJWeWRtbGpa
+            V0ZqWTI5MWJuUXZjMlZ5ZG1salpTMWhZMk52ZFc1MExuVnBaQ0k2SWpBeFltVXpORE5qTFRrME9U
+            UXRORFU1TUMxaFkyTmxMV0ptWkRjek1qVTFaakpoTmlJc0luTjFZaUk2SW5ONWMzUmxiVHB6WlhK
+            MmFXTmxZV05qYjNWdWREcHpjR2x1Ym1GclpYSTZjM0JwYm01aGEyVnlMWGR6TFhOaEluMC5qYTFY
+            WUp3REFjVDJFQ0hSN2JBS2Fmczl1NXJPZkViYjRGWkpqVFBQWnR1LW5nVTdycDlqYllHUDdVRDJp
+            SnM4RkZHNHdVaTNoZjFkRHB4QWVSRXg0RzlyZzNyU1E5Yk9USXBVMEtiS2pTV1pPME5FSWEyREVF
+            RE9lTE9NRG9XdDMzZnc1RHN0eUZjNXpuM2ducjMzQ2d1RDdNSFVBVXBWNTNlbGZJZ2FOeG1yc3JB
+            Z3Azb2hmaUNjY1hCckpCdGJhWVlySFlrSkpvTmJmU1NyX3JKZFVaWmd5cEpXV0ZSempSaExELWZV
+            UWl3QUVGSEtkRm1NYmRvZ0MzRzRWOUM2Qk1KYmNMaV95N0dRVjR0UWxRMXNZWFQ2LXFNZ1NVY1Vj
+            YVFPSzc5LVNfbGMxTU93RktxdXItQUtfYWFxbWp1UDQyT0lDX0FhbnFQZ0pRM2thWE8tUEEK
   # spec.expose - This section defines how Spinnaker should be publicly exposed
   expose:
     type: service  # Kubernetes LoadBalancer type (service/ingress), note: only "service" is supported for now
