@@ -55,7 +55,7 @@ spec:
             onlySpinnakerManaged: false
             kubeconfigFile: kubeconfig-sp  # File name must match "files" key
           primaryAccount: spinnaker-workshop  # Change to a desired account from the accounts array
-    profiles:
+      profiles:
         clouddriver:
           dockerRegistry:
             enabled: true
@@ -68,10 +68,10 @@ spec:
               trackDigests: true
               repositories:
               - $ECR_REPOSITORY
-        igor:
-          docker-registry:
-            enabled: true
-    files:
+      igor:
+        docker-registry:
+          enabled: true
+      files:
         kubeconfig-sp: |
             YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhv
             cml0eS1kYXRhOiBMUzB0TFMxQ1JVZEpUaUJEUlZKVVNVWkpRMEZVUlMwdExTMHRDazFKU1VNMWVr
